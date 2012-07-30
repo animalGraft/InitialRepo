@@ -25,7 +25,6 @@ quaternion.conjugate = function (op) {
 };
 
 quaternion.rotateVector = function (quat, vec) {
-	//check for proper inputs?
 	var vecAsQuat = [];
 	vecAsQuat[0] = vec[0];
 	vecAsQuat[1] = vec[1];
@@ -34,7 +33,15 @@ quaternion.rotateVector = function (quat, vec) {
 
 	return quaternion.multiply(quaternion.multiply(quat, vecAsQuat), quaternion.conjugate(quat));
 };
-//from angle axis
-//get angle axis
 
-//do I want to keep functional or go OPP?
+quaternion.fromAngleAxis = function (angle, axis) {
+	var angleRads = angle * (Math.PI / 180);
+	var sinAngle = Math.sin(angleRads * 0.5);
+	var normalAxis = normalize(axis);
+	return [sinAngle * normalAxis[0], sinAngle * normalAxis[1], sinAngle * normalAxis[2], Math.cos(angleRads * 0.5)];
+};
+
+var normalize = function (axis) {
+	var len = Math.sqrt(axis[0] * axis[0] +  axis[1] * axis[1] +  axis[2] * axis[2]);
+	return [ axis[0] / len, axis[1] / len, axis[2] / len];
+};

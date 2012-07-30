@@ -2,8 +2,10 @@
 <head>
 <script type="text/javascript" src="quaternion.js"></script>
 <script type="text/javascript">
-var quat = quaternion.create();
-alert("Quaternion: " + quat[0] + ", " + quat[1] + ", " + quat[2] + ", " + quat[3]);
+var quat = quaternion.fromAngleAxis( 45.0, [ 1, 1, 1]);
+var quat2 = quaternion.fromAngleAxis( 30.0, [ 1, 0, 0]);
+quat = quaternion.multiply(quat, quat2);
+alert("Quaternion: x = " + quat[0] + ", y = " + quat[1] + ", z = " + quat[2] + ", w = " + quat[3]);
 </script>
 </head>
 </html>
