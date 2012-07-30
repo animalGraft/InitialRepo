@@ -6,6 +6,8 @@ var quat = quaternion.fromAngleAxis( 45.0, [ 1, 1, 1]);
 var quat2 = quaternion.fromAngleAxis( 30.0, [ 1, 0, 0]);
 quat = quaternion.multiply(quat, quat2);
 alert("Quaternion: x = " + quat[0] + ", y = " + quat[1] + ", z = " + quat[2] + ", w = " + quat[3]);
+var vec = quaternion.rotateVector(quat, [0, 1, 0]);
+alert("Vector: x = " + vec[0] + " y = " + vec[1] + " z = " + vec[2]);
 </script>
 </head>
 </html>

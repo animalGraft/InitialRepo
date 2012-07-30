@@ -22,6 +22,7 @@ quaternion.conjugate = function (op) {
 	result[1] = -op[1];
 	result[2] = -op[2];
 	result[3] = op[3];
+	return result;
 };
 
 quaternion.rotateVector = function (quat, vec) {
