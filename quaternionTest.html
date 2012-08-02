@@ -2,12 +2,53 @@
 <head>
 <script type="text/javascript" src="quaternion.js"></script>
 <script type="text/javascript">
-var quat = quaternion.fromAngleAxis( 45.0, [ 1, 1, 1]);
-var quat2 = quaternion.fromAngleAxis( 30.0, [ 1, 0, 0]);
-quat = quaternion.multiply(quat, quat2);
-alert("Quaternion: x = " + quat[0] + ", y = " + quat[1] + ", z = " + quat[2] + ", w = " + quat[3]);
-var vec = quaternion.rotateVector(quat, [0, 1, 0]);
-alert("Vector: x = " + vec[0] + " y = " + vec[1] + " z = " + vec[2]);
+function addDiv(innerText, id)
+{
+	var result1 = document.createElement('div');
+	result1.setAttribute('id', id);
+	result1.innerHTML = innerText;
+	var div = document.getElementsByTagName('body')[0];
+	div.appendChild(result1);
+}
+
+function startTest()
+{
+	var quat = quaternion.fromAngleAxis(45.0, [ 1, 1, 1]);
+	addDiv("The first quat created is: " + quaternion.toString(quat));
+	
+	var quat2 = quaternion.fromAngleAxis(30.0, [ 1, 0, 0]);
+	addDiv("The second quat created is: " + quaternion.toString(quat2));
+	
+	quat = quaternion.multiply(quat, quat2);
+	addDiv("The result of the multiplication of these two is: " + quaternion.toString(quat));
+	
+	var vec = quaternion.rotateVector(quat, [0, 1, 0]);
+	addDiv("The result of applying this quat to the vector (0, 1, 0) is: (" + vec[0] + ", "  + vec[1] + ", "  + vec[2] + ")" );
+	
+	var i;
+	addDiv("<br>");
+	var start = new Date().getMilliseconds();
+	for(i = 0; i < 10000; i++)
+	{
+		var cosAngle = quat[3] * quat[3] * 2 - 1;
+		var sinAngle = Math.sin(Math.acos(cosAngle));
+		//var sinAngle = Math.sqrt(1 - cosAngle * cosAngle);
+	}
+	
+	var timeToCompute = new Date().getMilliseconds() - start;
+	addDiv("it took " + timeToCompute + " milliseconds to get the cos and sin of the angle for the quat 10000 times");
+
+	start = new Date().getMilliseconds();
+	for(i = 0; i < 10000; i++)
+	{
+		var mat = quaternion.toMatrix(quat);
+	}
+	timeToCompute = new Date().getMilliseconds() - start;
+	addDiv("it took " + timeToCompute + " milliseconds to convert the quat to a matrix 10000 times");
+}
 </script>
 </head>
+<body onload="startTest();">
+    
+</body>
 </html>
