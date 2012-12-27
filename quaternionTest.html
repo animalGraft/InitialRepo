@@ -11,6 +11,15 @@ function addDiv(innerText, id)
 	div.appendChild(result1);
 }
 
+function vectorMatrixMult(vec, mat)
+{
+	var result = [];
+	result[0] = vec[0] * mat[0] + vec [1] * mat[3] + vec [2] * mat[6];
+	result[1] = vec[0] * mat[1] + vec [1] * mat[4] + vec [2] * mat[7];
+	result[2] = vec[0] * mat[2] + vec [1] * mat[5] + vec [2] * mat[8];
+	return result;
+}
+
 function startTest()
 {
 	var quat = quaternion.fromAngleAxis(45.0, [ 1, 1, 1]);
@@ -39,16 +48,20 @@ function startTest()
 	addDiv("it took " + timeToCompute + " milliseconds to get the cos and sin of the angle for the quat 10000 times");
 
 	start = new Date().getMilliseconds();
+	var mat;
 	for(i = 0; i < 10000; i++)
 	{
-		var mat = quaternion.toMatrix(quat);
+		mat = quaternion.toMatrix(quat);
 	}
+	
+	vec = vectorMatrixMult([0, 1, 0], mat);
 	timeToCompute = new Date().getMilliseconds() - start;
 	addDiv("it took " + timeToCompute + " milliseconds to convert the quat to a matrix 10000 times");
+	//should provide the same result as applying the quaternion above. 
+	addDiv("The result of applying this mat to the vector (0, 1, 0) is: (" + vec[0] + ", "  + vec[1] + ", "  + vec[2] + ")" );
 }
 </script>
 </head>
 <body onload="startTest();">
-    
 </body>
 </html>
